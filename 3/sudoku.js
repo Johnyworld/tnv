@@ -1,6 +1,8 @@
-const size = 10000;
-
-console.log(`=== START! SIZE: ${size} ===`);
+const readline = require("readline");
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
 
 const shuffle = (arr) => {
   return arr.sort(() => Math.random() - 0.5);
@@ -26,6 +28,8 @@ const getMatrix = (num) => {
 }
 
 const main = (num) => {
+  console.log(`=== START! SIZE: ${num} ===`);
+
   let arr = getMatrix(num);
   let randomA = getRandomArr(num);
   let randomB = getRandomArr(num);
@@ -36,11 +40,21 @@ const main = (num) => {
     }
   }
 
-  if ( size < 20 ) {
+  if ( num < 20 ) {
     console.table(arr);
   } else {
     console.log(arr);
   }
 }
 
-main(size);
+console.log('\n숫자를 입력해주세요.');
+rl.on("line", function(line) {
+  if (Number(line)) {
+    main(line);
+  } else {
+    console.log('숫자가 아닙니다.');
+  }
+  rl.close();
+}).on("close", function() {
+  process.exit();
+});
